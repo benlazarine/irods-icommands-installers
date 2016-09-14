@@ -1,0 +1,13 @@
+FROM centos:6
+MAINTAINER tedgin@cyverse.org
+
+RUN yum --assumeyes install \
+        bzip2-devel curl-devel fuse-devel gcc-c++ help2man libxml2-devel make openssl-devel \
+        pam-devel perl-JSON python-devel rpm-build rsync unixODBC wget
+RUN mkdir /rpmbuild /src
+RUN chmod -R a+rwx /rpmbuild
+VOLUME /src
+
+WORKDIR /src
+
+CMD bash

@@ -1,0 +1,18 @@
+FROM ubuntu:precise
+MAINTAINER tedgin@cyverse.org
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update
+RUN apt-get install --assume-yes apt-utils 2>/dev/null
+RUN dpkg-reconfigure apt-utils
+RUN apt-get install --assume-yes \
+        curl g++ help2man libbz2-dev libcurl4-gnutls-dev libfuse-dev libjson-perl libpam0g-dev \
+        libssl-dev libxml2-dev make python-dev python-simplejson rsync unixodbc wget zlib1g-dev
+RUN mkdir /src
+
+VOLUME /src
+
+WORKDIR /src
+
+CMD bash
