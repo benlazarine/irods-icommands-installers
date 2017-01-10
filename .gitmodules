@@ -1,4 +1,3 @@
 [submodule "irods"]
 	path = irods
-	url = https://github.com/irods/irods.git
-	branch = origin/4.1.9
+	url = git@github.com:cyverse/cyverse-irods.git
