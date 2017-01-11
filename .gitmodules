@@ -4,3 +4,6 @@
 [submodule "cyverse-irods"]
 	path = cyverse-irods
 	url = git@github.com:cyverse/cyverse-irods.git
+[submodule "scripts/installer-gen"]
+	path = scripts/installer-gen
+	url = git@github.com:cyverse/installer-gen.git
