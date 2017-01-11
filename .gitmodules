@@ -1,3 +1,6 @@
 [submodule "irods"]
 	path = irods
 	url = git@github.com:irods/irods.git
+[submodule "cyverse-irods"]
+	path = cyverse-irods
+	url = git@github.com:cyverse/cyverse-irods.git
