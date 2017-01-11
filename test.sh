@@ -19,10 +19,12 @@ allPass=true
 
 for os in "${!images[@]}"
 do
-  printf '>>> Testing %s\n' "$os"
+  for ver in 4.1.9 4.1.9-cv
+  do    
+    printf '>>> Testing %s on %s\n' "$ver" "$os"
  
-  docker run --interactive --privileged --rm --volume "$PWD"/packages:/packages \
-      "${images[$os]}" bash <<EOF > /dev/null
+    docker run --interactive --privileged --rm --volume "$PWD"/packages:/packages \
+        "${images[$os]}" bash <<EOF > /dev/null
 if [ "$os" == opensuse-13 ]
 then
   if ! zypper --non-interactive install tar
@@ -36,7 +38,7 @@ then
   exit 1
 fi 
 
-if ! bash /packages/"$os"/irods-fuse-4.1.9-"$os".installer /root
+if ! bash /packages/"$os"/irods-fuse-"$ver"-"$os".installer /root
 then
   exit 1
 fi 
@@ -66,13 +68,14 @@ fi
 ls /tmp/fmount | grep --quiet --regexp '^bashrc\$'
 EOF
 
-  if [ "$?" -eq 0 ]
-  then
-    printf '<<< %s passed\n' "$os"
-  else
-    allPass=false
-    printf '<<< %s failed\n' "$os"
-  fi
+    if [ "$?" -eq 0 ]
+    then
+      printf '<<< %s on %s passed\n' "$ver" "$os"
+    else
+      allPass=false
+      printf '<<< %s on %s failed\n' "$ver" "$os"
+    fi
+  done
 done
 
 if [ "$allPass" == false ]

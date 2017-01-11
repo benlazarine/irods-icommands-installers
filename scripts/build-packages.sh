@@ -17,18 +17,43 @@ in
     ;;
 esac
 
-/src/packaging/build.sh clean
-/src/packaging/build.sh -r icommands
-/src/packaging/make_icommands_for_distribution.sh
-"$(dirname $0)"/installer-gen/gen-installer /packages/"$OS"/irods-icommands-4.1.9-"$OS".installer \
-                                            /src/icommands.tgz \
-                                            "$(dirname $0)"/config-icommands.sh
+readonly Scripts=$(dirname "$0")
 
-mkdir --parents /src/irods-fuse/bin /src/irods-fuse/lib
-cp /src/iRODS/clients/fuse/bin/irodsFs /src/irods-fuse/bin
-cp "$LibDir"/libfuse.so.2 /src/irods-fuse/lib
-tar --create --gzip --directory /src --file /src/irods-fuse.tgz irods-fuse
-"$(dirname $0)"/installer-gen/gen-installer /packages/"$OS"/irods-fuse-4.1.9-"$OS".installer \
-                                            /src/irods-fuse.tgz \
-                                            $(dirname "$0")/config-fuse.sh
-rm --force --recursive /src/irods-fuse /src/irods-fuse.tgz
+for ver in 4.1.9 4.1.9-cv
+do
+  src=/src/"$ver"
+  pkg="$src"/packaging
+
+  rm --force "$src"/icommands.tgz
+  "$pkg"/build.sh clean
+
+  if ! "$pkg"/build.sh -r icommands; then continue; fi
+
+  if [ "$ver" == 4.1.9 ]
+  then
+    if (cd "$src" && "$pkg"/make_icommands_for_distribution.sh)
+    then
+      "$Scripts"/installer-gen/gen-installer \
+          /packages/"$OS"/irods-icommands-"$ver"-"$OS".installer \
+          "$src"/icommands.tgz \
+          "$Scripts"/config-icommands.sh
+
+      rm --force "$src"/icommands.tgz
+    fi
+  fi
+
+  fuse="$src"/irods-fuse
+  tgz="$fuse".tgz
+  mkdir --parents "$fuse"/bin "$fuse"/lib
+  cp "$src"/iRODS/clients/fuse/bin/irodsFs "$fuse"/bin
+  cp "$LibDir"/libfuse.so.2 "$fuse"/lib
+  tar --create --gzip --directory "$src" --file "$tgz" irods-fuse
+
+  "$Scripts"/installer-gen/gen-installer \
+      /packages/"$OS"/irods-fuse-"$ver"-"$OS".installer \
+      "$tgz" \
+      "$Scripts"/config-fuse.sh
+
+  rm --force --recursive "$fuse" "$tgz"
+  "$pkg"/build.sh clean
+done

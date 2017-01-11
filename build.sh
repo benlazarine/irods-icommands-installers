@@ -11,7 +11,8 @@ do
   docker run --interactive --rm \
              --name=clients-builder \
              --user=$(id -u):$(id -g) \
-             --volume=$(pwd)/irods:/src \
+             --volume=$(pwd)/irods:/src/4.1.9 \
+             --volume=$(pwd)/cyverse-irods:/src/4.1.9-cv \
              --volume=$(pwd)/packages:/packages \
              --volume=$(pwd)/scripts:/scripts \
              "$image" /scripts/clean-packages.sh "$os"
@@ -19,7 +20,8 @@ do
   docker run --interactive --rm \
              --name=clients-builder \
              --user=$(id -u):$(id -g) \
-             --volume=$(pwd)/irods:/src \
+             --volume=$(pwd)/irods:/src/4.1.9 \
+             --volume=$(pwd)/cyverse-irods:/src/4.1.9-cv \
              --volume=$(pwd)/packages:/packages \
              --volume=$(pwd)/scripts:/scripts \
              "$image" /scripts/build-packages.sh "$os"
