@@ -29,6 +29,20 @@ do
 
   if ! "$pkg"/build.sh -r icommands; then continue; fi
 
+  if [ "$ver" == 4.1.9-cv ]
+  then
+    artifact=$(cd "$src"/build && ls)
+
+    if [ "$OS" == ubuntu-12 -o "$OS" == ubuntu-14 ]
+    then
+      cvArtifact="${artifact/64bit.deb/cv-64bit-$OS.deb}"
+    else
+      cvArtifact="${artifact/64bit/cv-64bit}"
+    fi
+
+    cp "$src"/build/"$artifact" /packages/"$OS"/"$cvArtifact"
+  fi
+
   if [ "$ver" == 4.1.9 ]
   then
     if (cd "$src" && "$pkg"/make_icommands_for_distribution.sh)
