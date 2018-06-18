@@ -1,32 +1,46 @@
 # irods-icommands-installers
-Builds iCommands and iRODS FUSE user space installers and distro packages not provided by RENCI for all the distributions iRODS supports
 
-This builds user space installers for iCommands and iRODS FUSE client for all of the operating systems that version 4.1.9 of iRODS supports. It also builds the distro packages containing the iCommands with CyVerse's custom iRODS FUSE client for the supported OSes.
+Builds iCommands and iRODS FUSE user space installers and distro packages not
+provided by RENCI for all the distributions iRODS supports
 
-Each installer is a posix shell script that will install the iCommands, the stock iRODS FUSE client, or CyVerse's custom iRODS FUSE client  in a user chosen place. Then it will modify the user's .bashrc so the executables are added to the path.
+This builds user space installers for iCommands and iRODS FUSE client for all
+of the operating systems that version 4.1.9 of iRODS supports. It also builds
+the distro packages containing the iCommands with CyVerse's custom iRODS FUSE
+client for the supported OSes.
 
-`irods-icommands-4.1.9-<distro>.installer` installs the iCommands. `irods-fuse-4.1.9-<distro>.installer` installs the stock FUSE client. `irods-fuse-4.1.9-cv-<distro>.installer` installs CyVerse's custom FUSE client.
+Each installer is a posix shell script that will install the iCommands, the
+stock iRODS FUSE client, or CyVerse's custom iRODS FUSE client  in a user chosen
+place. Then it will modify the user's .bashrc so the executables are added to
+the path.
+
+`irods-icommands-4.1.9-<distro>.installer` installs the iCommands.
+`irods-fuse-4.1.9-<distro>.installer` installs the stock FUSE client.
+`irods-fuse-4.1.9-cv-<distro>.installer` installs CyVerse's custom FUSE client.
+
 
 ## Initialzation
 
-This repository depends on the `4.1.9` tag of the `irods/irods` github repository.
+This repository depends on the `4.1.9` tag of the `irods/irods` github
+repository.
 
-Before using, the submodules need to be prepared. 
+Before using, the submodules need to be prepared.
 
-```
+```bash
 prompt> git submodule init
 prompt> git submodule update
 prompt> (cd irods && git checkout 4.1.9 && git submodule init && git submodule update)
 prompt> (cd cyverse-irods && git submodule init && git submodule update)
 ```
 
+
 ## Usage
 
-Use `build.sh` to build all of the user space installers. It places them under the `packages/` directory.
+Use `build.sh` to build all of the user space installers. It places them under
+the `packages/` directory.
 
-```
+```bash
 prompt> ./build.sh
-    
+
 prompt> tree packages
 packages/
 ├── centos-6
