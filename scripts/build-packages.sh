@@ -2,7 +2,7 @@
 
 readonly OS="$1"
 
-readonly Ver=4.1.9
+readonly Ver=4.1.10
 
 mkdir --parents /packages/"$OS"
 
@@ -29,17 +29,14 @@ rm --force "$src"/icommands.tgz
 
 if ! "$pkg"/build.sh -r icommands; then continue; fi
 
-if [ "$Ver" == 4.1.9 ]
+if (cd "$src" && "$pkg"/make_icommands_for_distribution.sh)
 then
-  if (cd "$src" && "$pkg"/make_icommands_for_distribution.sh)
-  then
-    "$Scripts"/installer-gen/gen-installer \
-        /packages/"$OS"/irods-icommands-"$Ver"-"$OS".installer \
-        "$src"/icommands.tgz \
-        "$Scripts"/config-icommands.sh
+  "$Scripts"/installer-gen/gen-installer \
+      /packages/"$OS"/irods-icommands-"$Ver"-"$OS".installer \
+      "$src"/icommands.tgz \
+      "$Scripts"/config-icommands.sh
 
-    rm --force "$src"/icommands.tgz
-  fi
+  rm --force "$src"/icommands.tgz
 fi
 
 fuse="$src"/irods-fuse
