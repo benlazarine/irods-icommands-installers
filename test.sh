@@ -7,12 +7,11 @@ read -p 'Enter your irods zone: ' zone
 read -s -p 'Enter your current iRODS password: ' password
 printf '\n'
 
-declare -A images=( 
-  [centos-6]=centos:6 
-  [centos-7]=centos:7 
-  [opensuse-13]=opensuse:harlequin 
-  [ubuntu-12]=ubuntu:precise 
-  [ubuntu-14]=ubuntu:trusty 
+declare -A images=(
+  [centos-6]=centos:6
+  [centos-7]=centos:7
+  [ubuntu-12]=ubuntu:precise
+  [ubuntu-14]=ubuntu:trusty
 )
 
 allPass=true
@@ -20,33 +19,26 @@ allPass=true
 for os in "${!images[@]}"
 do
   for ver in 4.1.9 4.1.9-cv
-  do    
+  do
     printf '>>> Testing %s on %s\n' "$ver" "$os"
- 
-    docker run --interactive --privileged --rm --volume "$PWD"/packages:/packages \
-        "${images[$os]}" bash <<EOF > /dev/null
-if [ "$os" == opensuse-13 ]
-then
-  if ! zypper --non-interactive install tar
-  then
-    exit 1
-  fi 
-fi
 
+    docker run --interactive --privileged --rm --volume "$PWD"/packages:/packages \
+        "${images[$os]}" bash \
+<<EOF > /dev/null
 if ! bash /packages/"$os"/irods-icommands-4.1.9-"$os".installer /root
 then
   exit 1
-fi 
+fi
 
 if ! bash /packages/"$os"/irods-fuse-"$ver"-"$os".installer /root
 then
   exit 1
-fi 
+fi
 
 sed --in-place '/[ -z "\$PS1" ] && return/d' /root/.bashrc
 . /root/.bashrc
 
-printf '%s\n%s\n%s\n%s\n' "$iesHost" "$iesPort" "$user" "$zone" | iinit "$password" 
+printf '%s\n%s\n%s\n%s\n' "$iesHost" "$iesPort" "$user" "$zone" | iinit "$password"
 
 if [ "$?" -ne 0 ]
 then

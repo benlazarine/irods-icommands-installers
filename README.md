@@ -53,11 +53,6 @@ packages/
 │   ├── irods-fuse-4.1.9-cv-centos-7.installer
 │   ├── irods-icommands-4.1.9-centos-7.installer
 │   └── irods-icommands-4.1.9-cv-64bit-centos7.rpm
-├── opensuse-13
-│   ├── irods-fuse-4.1.9-cv-opensuse-13.installer
-│   ├── irods-fuse-4.1.9-opensuse-13.installer
-│   ├── irods-icommands-4.1.9-cv-64bit-suse.rpm
-│   └── irods-icommands-4.1.9-opensuse-13.installer
 ├── ubuntu-12
 │   ├── irods-fuse-4.1.9-cv-ubuntu-12.installer
 │   ├── irods-fuse-4.1.9-ubuntu-12.installer
@@ -69,5 +64,5 @@ packages/
     ├── irods-icommands-4.1.9-cv-64bit-ubuntu-14.deb
     └── irods-icommands-4.1.9-ubuntu-14.installer
 
-5 directories, 20 files
+4 directories, 16 files
 ```

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-readonly OSes=(centos-6 centos-7 opensuse-13 ubuntu-12 ubuntu-14)
+readonly OSes=(centos-6 centos-7 ubuntu-12 ubuntu-14)
 
 for os in ${OSes[*]}
-do 
+do
   image=irods-clients-build:4.1.9-"$os"
 
   if [ -n $(docker images --quiet "$image") ]

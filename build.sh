@@ -1,6 +1,6 @@
 #!/bin/bash
 
-readonly OSes=(centos-6 centos-7 opensuse-13 ubuntu-12 ubuntu-14)
+readonly OSes=(centos-6 centos-7 ubuntu-12 ubuntu-14)
 
 for os in ${OSes[*]}
 do
