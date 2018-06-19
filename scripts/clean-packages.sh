@@ -1,11 +1,8 @@
 #!/bin/bash
 
 readonly OS="$1"
+readonly Ver=4.1.9
 
 rm --force --recursive /packages/"$OS"
-
-for ver in 4.1.9 4.1.9-cv
-do
-  /src/"$ver"/packaging/build.sh clean
-  rm --force /src/"$ver"/icommands.tgz
-done
+/src/"$Ver"/packaging/build.sh clean
+rm --force /src/"$Ver"/icommands.tgz

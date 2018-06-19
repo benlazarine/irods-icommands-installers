@@ -1,5 +1,7 @@
 #! /bin/bash
 
+readonly Ver=4.1.9
+
 read -p 'Enter the host name (DNS) of the server to connect to: ' iesHost
 read -p 'Enter the port number: ' iesPort
 read -p 'Enter your irods user name: ' user
@@ -18,19 +20,18 @@ allPass=true
 
 for os in "${!images[@]}"
 do
-  for ver in 4.1.9 4.1.9-cv
-  do
-    printf '>>> Testing %s on %s\n' "$ver" "$os"
+  printf '>>> Testing %s on %s\n' "$Ver" "$os"
 
-    docker run --interactive --privileged --rm --volume "$PWD"/packages:/packages \
-        "${images[$os]}" bash \
-<<EOF > /dev/null
+  docker run --interactive --privileged --rm --volume "$PWD"/packages:/packages \
+      "${images[$os]}" bash \
+    > /dev/null \
+<<EOF
 if ! bash /packages/"$os"/irods-icommands-4.1.9-"$os".installer /root
 then
   exit 1
 fi
 
-if ! bash /packages/"$os"/irods-fuse-"$ver"-"$os".installer /root
+if ! bash /packages/"$os"/irods-fuse-"$Ver"-"$os".installer /root
 then
   exit 1
 fi
@@ -60,14 +61,13 @@ fi
 ls /tmp/fmount | grep --quiet --regexp '^bashrc\$'
 EOF
 
-    if [ "$?" -eq 0 ]
-    then
-      printf '<<< %s on %s passed\n' "$ver" "$os"
-    else
-      allPass=false
-      printf '<<< %s on %s failed\n' "$ver" "$os"
-    fi
-  done
+  if [ "$?" -eq 0 ]
+  then
+    printf '<<< %s on %s passed\n' "$Ver" "$os"
+  else
+    allPass=false
+    printf '<<< %s on %s failed\n' "$Ver" "$os"
+  fi
 done
 
 if [ "$allPass" == false ]

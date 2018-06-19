@@ -12,7 +12,6 @@ do
                --name=netcdf-builder \
                --user=$(id -u):$(id -g) \
                --volume=$(pwd)/irods:/src/4.1.9 \
-               --volume=$(pwd)/cyverse-irods:/src/4.1.9-cv \
                --volume=$(pwd)/packages:/packages \
                --volume=$(pwd)/scripts/clean-packages.sh:/clean-packages.sh \
                "$image" /clean-packages.sh "$os"

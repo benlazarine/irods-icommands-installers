@@ -4,18 +4,14 @@ Builds iCommands and iRODS FUSE user space installers and distro packages not
 provided by RENCI for all the distributions iRODS supports
 
 This builds user space installers for iCommands and iRODS FUSE client for all
-of the operating systems that version 4.1.9 of iRODS supports. It also builds
-the distro packages containing the iCommands with CyVerse's custom iRODS FUSE
-client for the supported OSes.
+of the operating systems that version 4.1.9 of iRODS supports.
 
-Each installer is a posix shell script that will install the iCommands, the
-stock iRODS FUSE client, or CyVerse's custom iRODS FUSE client  in a user chosen
-place. Then it will modify the user's .bashrc so the executables are added to
-the path.
+Each installer is a posix shell script that will install the iCommands or the
+stock iRODS FUSE client in a user chosen place. Then it will modify the user's
+.bashrc so the executables are added to the path.
 
 `irods-icommands-4.1.9-<distro>.installer` installs the iCommands.
 `irods-fuse-4.1.9-<distro>.installer` installs the stock FUSE client.
-`irods-fuse-4.1.9-cv-<distro>.installer` installs CyVerse's custom FUSE client.
 
 
 ## Initialzation
@@ -28,8 +24,7 @@ Before using, the submodules need to be prepared.
 ```bash
 prompt> git submodule init
 prompt> git submodule update
-prompt> (cd irods && git checkout 4.1.9 && git submodule init && git submodule update)
-prompt> (cd cyverse-irods && git submodule init && git submodule update)
+prompt> (cd irods && git submodule init && git submodule update)
 ```
 
 
@@ -45,24 +40,16 @@ prompt> tree packages
 packages/
 ├── centos-6
 │   ├── irods-fuse-4.1.9-centos-6.installer
-│   ├── irods-fuse-4.1.9-cv-centos-6.installer
-│   ├── irods-icommands-4.1.9-centos-6.installer
-│   └── irods-icommands-4.1.9-cv-64bit-centos6.rpm
+│   └── irods-icommands-4.1.9-centos-6.installer
 ├── centos-7
 │   ├── irods-fuse-4.1.9-centos-7.installer
-│   ├── irods-fuse-4.1.9-cv-centos-7.installer
-│   ├── irods-icommands-4.1.9-centos-7.installer
-│   └── irods-icommands-4.1.9-cv-64bit-centos7.rpm
+│   └── irods-icommands-4.1.9-centos-7.installer
 ├── ubuntu-12
-│   ├── irods-fuse-4.1.9-cv-ubuntu-12.installer
 │   ├── irods-fuse-4.1.9-ubuntu-12.installer
-│   ├── irods-icommands-4.1.9-cv-64bit-ubuntu-12.deb
 │   └── irods-icommands-4.1.9-ubuntu-12.installer
 └── ubuntu-14
-    ├── irods-fuse-4.1.9-cv-ubuntu-14.installer
     ├── irods-fuse-4.1.9-ubuntu-14.installer
-    ├── irods-icommands-4.1.9-cv-64bit-ubuntu-14.deb
     └── irods-icommands-4.1.9-ubuntu-14.installer
 
-4 directories, 16 files
+4 directories, 8 files
 ```
